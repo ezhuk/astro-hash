@@ -33,7 +33,7 @@ Build your site, and Astro Hash will automatically annotate `<link>`, `<style>`,
 npm run build
 ```
 
-When the build finishes, take note of the injected attributes and add the generated hashes to your Content-Security-Policy HTTP headers so browsers can enforce them.
+When the build finishes, take note of the injected attributes and add the generated hashes to your `Content-Security-Policy` HTTP headers so browsers can enforce them.
 
 ## Documentation
 
