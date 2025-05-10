@@ -7,7 +7,7 @@ An [Astro Integration](https://docs.astro.build/en/guides/integrations-guide/) t
 
 ##  Getting Started
 
-Make sure to configure your `.npmrc` to enable installing scoped packages. See [Installing a package from GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package) for more details.
+Make sure to configure your `.npmrc` to enable installing scoped packages. See [Installing a package from GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package) for instructions and more details.
 
 ```bash
 npm install --save-dev @ezhuk/astro-hash
@@ -32,6 +32,8 @@ Build your site, and Astro Hash will automatically annotate `<link>`, `<style>`,
 ```bash
 npm run build
 ```
+
+When the build finishes, take note of the injected attributes and add the generated hashes to your Content-Security-Policy HTTP headers so browsers can enforce them.
 
 ## Documentation
 
