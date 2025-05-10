@@ -1,47 +1,10 @@
 import fs from 'fs/promises';
-import path from 'path';
 import { fileURLToPath } from 'node:url';
-import { createHash } from 'crypto';
+import type { AstroIntegration } from 'astro';
 
-import type { AstroIntegration } from 'astro'
+import { getFiles, readOrFetchFile, computeHash } from './utils';
 
 const PKG_NAME = 'security';
-
-async function getFiles(dir: string): Promise<string[]> {
-  const files: string[] = [];
-  for (const entry of await fs.readdir(dir, { withFileTypes: true })) {
-    const entryPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...(await getFiles(entryPath)));
-    } else if (entry.isFile() && entry.name.endsWith('.html')) {
-      files.push(entryPath);
-    }
-  }
-  return files;
-}
-
-async function readOrFetchFile(url: string, dir: string): Promise<Buffer|null> {
-  try {
-    if (/^(https?:)?\/\//.test(url)) {
-      const fetchUrl = url.startsWith('//') ? `https:${url}` : url;
-      const res = await fetch(fetchUrl, {
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Origin': new URL(fetchUrl).origin
-        }
-      });
-      if (!res.ok) {
-        return null;
-      }
-      return Buffer.from(await res.arrayBuffer());
-    } else {
-      const localPath = url.startsWith('/') ? url.slice(1) : url;
-      return await fs.readFile(path.join(dir, localPath));
-    }
-  } catch {
-    return null;
-  }
-}
 
 async function addSecurityAttributes(html: string, dir: string): Promise<string> {
   const changes: Array<{ from: string; to: string }> = [];
@@ -54,13 +17,13 @@ async function addSecurityAttributes(html: string, dir: string): Promise<string>
       if (!data) {
         continue;
       }
-      hash = `sha384-${createHash('sha384').update(data).digest('base64')}`;
+      hash = computeHash(data, 'sha384');
     } else if (content != null && (tag === 'script' || tag === 'style')) {
       const data = content.trim();
       if (!data) {
         continue;
       }
-      hash = `sha256-${createHash('sha256').update(data).digest('base64')}`;
+      hash = computeHash(data, 'sha256');
     } else {
       continue;
     }
