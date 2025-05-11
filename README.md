@@ -4,6 +4,7 @@ An [Astro Integration](https://docs.astro.build/en/guides/integrations-guide/) t
 
 [![test](https://github.com/ezhuk/astro-hash/actions/workflows/test.yml/badge.svg)](https://github.com/ezhuk/astro-hash/actions/workflows/test.yml)
 [![prod](https://github.com/ezhuk/astro-hash/actions/workflows/prod.yml/badge.svg)](https://github.com/ezhuk/astro-hash/actions/workflows/prod.yml)
+[![docs](https://github.com/ezhuk/astro-hash/actions/workflows/docs.yml/badge.svg)](https://github.com/ezhuk/astro-hash/actions/workflows/docs.yml)
 
 ##  Getting Started
 
