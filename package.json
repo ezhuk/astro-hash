@@ -10,14 +10,8 @@
     "./utils.js": "./dist/utils.js",
     "./utils": "./dist/utils.js"
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "astro",
-    "integration",
-    "security"
-  ],
+  "files": ["dist"],
+  "keywords": ["astro", "integration", "security"],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
