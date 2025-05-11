@@ -8,24 +8,18 @@
   "exports": {
     ".": "./dist/index.js"
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "astro",
-    "integration",
-    "security",
-    "hash"
-  ],
+  "files": ["dist"],
+  "keywords": ["astro", "integration", "security", "hash"],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "prepare": "npm run build",
-    "test": "vitest run"
+    "test": "vitest run",
+    "check": "biome check ."
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "astro": "^5.7.12",
     "typescript": "^5.8.3",
     "vitest": "^3.1.3"
