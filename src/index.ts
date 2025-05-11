@@ -68,4 +68,4 @@ export function security(): AstroIntegration {
 }
 
 export { addSecurityAttributes };
-export * from './utils';
+export * from './utils.js';
