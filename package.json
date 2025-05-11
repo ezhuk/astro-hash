@@ -1,6 +1,6 @@
 {
   "name": "@ezhuk/astro-hash",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Astro integration for automatic asset SRI and CSP hashing",
   "type": "module",
   "main": "dist/index.js",
@@ -8,8 +8,15 @@
   "exports": {
     ".": "./dist/index.js"
   },
-  "files": ["dist"],
-  "keywords": ["astro", "integration", "security", "hash"],
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "astro",
+    "integration",
+    "security",
+    "hash"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run",
