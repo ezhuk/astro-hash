@@ -17,6 +17,7 @@ jobs:
           cache: 'npm'
       - run: |
           npm ci
+          npm run check
           npm run build --if-present
           npm test
 
@@ -35,6 +36,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: |
           npm ci
+          npm run build --if-present
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
