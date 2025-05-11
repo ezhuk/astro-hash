@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 
-import { computeHash, getFiles, readOrFetchFile } from './utils';
+import { computeHash, getFiles, readOrFetchFile } from './utils.js';
 
 const PKG_NAME = '@ezhuk/astro-hash';
 
