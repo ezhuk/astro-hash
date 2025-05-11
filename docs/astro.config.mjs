@@ -9,21 +9,20 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Astro Hash Docs',
+      description:
+        'Astro integration to automatically generate SRI and CSP hashes.',
+      favicon: 'favicon.ico',
       social: [
         {
           icon: 'github',
           label: 'GitHub',
-          href: 'https://github.com/withastro/starlight',
+          href: 'https://github.com/ezhuk/astro-hash',
         },
       ],
       sidebar: [
         {
-          label: 'Guides',
-          items: [{ label: 'Example Guide', slug: 'guides/example' }],
-        },
-        {
-          label: 'Reference',
-          autogenerate: { directory: 'reference' },
+          label: 'Start Here',
+          items: [{ label: 'Getting Started', link: '/getting-started' }],
         },
       ],
     }),
