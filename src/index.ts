@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
+import { JSDOM } from 'jsdom';
 
 import { computeHash, getFiles, readOrFetchFile } from './utils.js';
 
@@ -10,41 +11,45 @@ async function addSecurityAttributes(
   html: string,
   dir: string,
 ): Promise<string> {
-  const changes: Array<{ from: string; to: string }> = [];
-  const RE =
-    /<(script|style|link)\b(?:[^>]*?\b(?:src|href)\s*=\s*["']([^"']*)["'][^>]*?|[^>]*?)(?:>([\s\S]*?)<\/\1\s*>|\s*\/?>)/gim;
-  for (const match of html.matchAll(RE)) {
-    const [full, tag, url, content] = match;
-    let hash: string | undefined;
-    if (url && (tag === 'script' || tag === 'link')) {
+  const dom = new JSDOM(html);
+  const document = dom.window.document;
+  for (const elem of Array.from(document.querySelectorAll('style'))) {
+    const text = (elem.textContent ?? '').trim();
+    const hash = computeHash(text, 'sha256');
+    elem.setAttribute('integrity', `${hash}`);
+  }
+  for (const elem of Array.from(
+    document.querySelectorAll('link[rel="stylesheet"][href]'),
+  )) {
+    const url = elem.getAttribute('href');
+    if (url) {
       const data = await readOrFetchFile(url, dir);
-      if (!data) {
-        continue;
+      if (data) {
+        const hash = computeHash(data, 'sha384');
+        elem.setAttribute('integrity', `${hash}`);
+        elem.setAttribute('crossorigin', 'anonymous');
       }
-      hash = computeHash(data, 'sha384');
-    } else if (content != null && (tag === 'script' || tag === 'style')) {
-      const data = content.trim();
-      if (!data) {
-        continue;
-      }
-      hash = computeHash(data, 'sha256');
-    } else {
-      continue;
     }
-    const cleaned = full
-      .replace(/\s+integrity="[^"]*"/gi, '')
-      .replace(/\s+crossorigin="[^"]*"/gi, '');
-    const closing = cleaned.endsWith('/>') ? '/>' : '>';
-    const opening = `${cleaned.replace(/>.*$/, '')} integrity="${hash}"${tag === 'link' && url?.startsWith('/') && url.endsWith('.css') ? '' : ` crossorigin="anonymous"`}${closing}`;
-    const replacement =
-      content != null ? `${opening + content}</${tag}>` : opening;
-    changes.push({ from: full, to: replacement });
   }
-  let out = html;
-  for (const { from, to } of changes) {
-    out = out.replace(from, to);
+  for (const elem of Array.from(document.querySelectorAll('script'))) {
+    if (elem.hasAttribute('src')) {
+      const url = elem.getAttribute('src');
+      if (url) {
+        const data = await readOrFetchFile(url, dir);
+        if (data) {
+          const hash = computeHash(data, 'sha384');
+          elem.setAttribute('integrity', `${hash}`);
+          elem.setAttribute('crossorigin', 'anonymous');
+        }
+      }
+    } else {
+      const text = (elem.textContent ?? '').trim();
+      const hash = computeHash(text, 'sha256');
+      elem.setAttribute('integrity', `${hash}`);
+      elem.setAttribute('crossorigin', 'anonymous');
+    }
   }
-  return out;
+  return dom.serialize();
 }
 
 export function security(): AstroIntegration {
