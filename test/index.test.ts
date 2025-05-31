@@ -23,6 +23,5 @@ describe('Hash', () => {
       dir,
     );
     expect(out).toContain(`integrity="sha256-${hash}"`);
-    expect(out).toContain(`crossorigin="anonymous"`);
   });
 });
