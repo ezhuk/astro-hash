@@ -12,43 +12,26 @@ async function addSecurityAttributes(
   dir: string,
 ): Promise<string> {
   const dom = new JSDOM(html);
-  const document = dom.window.document;
-  for (const elem of Array.from(document.querySelectorAll('style'))) {
-    const text = (elem.textContent ?? '').trim();
-    const hash = computeHash(text, 'sha256');
-    elem.setAttribute('integrity', `${hash}`);
-  }
-  for (const elem of Array.from(
-    document.querySelectorAll('link[rel="stylesheet"][href]'),
-  )) {
-    const url = elem.getAttribute('href');
-    if (url) {
-      const data = await readOrFetchFile(url, dir);
+  const elems = Array.from(
+    dom.window.document.querySelectorAll(
+      'style, link[rel="stylesheet"][href], script',
+    ),
+  );
+  await Promise.all(
+    elems.map(async (elem) => {
+      const url = elem.getAttribute('src') || elem.getAttribute('href');
+      const data = url
+        ? await readOrFetchFile(url, dir)
+        : (elem.textContent ?? '').trim();
       if (data) {
-        const hash = computeHash(data, 'sha384');
+        const hash = computeHash(data, url ? 'sha384' : 'sha256');
         elem.setAttribute('integrity', `${hash}`);
-        elem.setAttribute('crossorigin', 'anonymous');
-      }
-    }
-  }
-  for (const elem of Array.from(document.querySelectorAll('script'))) {
-    if (elem.hasAttribute('src')) {
-      const url = elem.getAttribute('src');
-      if (url) {
-        const data = await readOrFetchFile(url, dir);
-        if (data) {
-          const hash = computeHash(data, 'sha384');
-          elem.setAttribute('integrity', `${hash}`);
+        if (url) {
           elem.setAttribute('crossorigin', 'anonymous');
         }
       }
-    } else {
-      const text = (elem.textContent ?? '').trim();
-      const hash = computeHash(text, 'sha256');
-      elem.setAttribute('integrity', `${hash}`);
-      elem.setAttribute('crossorigin', 'anonymous');
-    }
-  }
+    }),
+  );
   return dom.serialize();
 }
 
