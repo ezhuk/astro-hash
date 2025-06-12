@@ -1,0 +1,12 @@
+---
+title: Quickstart
+icon: rocket
+---
+
+Build your site, and Astro Hash will automatically annotate `<link>`, `<style>`, and `<script>` tags in the generated HTML files in the output directory with `SRI` and `CSP` hashes.
+
+```bash
+npm run build
+```
+
+When the build finishes, take note of the injected attributes and add the generated hashes to your `Content-Security-Policy` HTTP headers so browsers can enforce them.
