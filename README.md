@@ -4,7 +4,6 @@ An [Astro Integration](https://docs.astro.build/en/guides/integrations-guide/) t
 
 [![test](https://github.com/ezhuk/astro-hash/actions/workflows/test.yml/badge.svg)](https://github.com/ezhuk/astro-hash/actions/workflows/test.yml)
 [![prod](https://github.com/ezhuk/astro-hash/actions/workflows/prod.yml/badge.svg)](https://github.com/ezhuk/astro-hash/actions/workflows/prod.yml)
-[![docs](https://github.com/ezhuk/astro-hash/actions/workflows/docs.yml/badge.svg)](https://github.com/ezhuk/astro-hash/actions/workflows/docs.yml)
 
 ##  Getting Started
 
@@ -38,7 +37,7 @@ When the build finishes, take note of the injected attributes and add the genera
 
 ## Documentation
 
-See the [full documentation](https://ezhuk.github.io/astro-hash) for more details.
+See the [full documentation](https://docs.ezhuk.dev/astro-hash) for more details.
 
 ## License
 
