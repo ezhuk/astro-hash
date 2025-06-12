@@ -1,0 +1,33 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "colors": {
+    "primary": "#16A34A",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
+  "description": "",
+  "icons": {
+    "library": "lucide"
+  },
+  "name": "Docs",
+  "navigation": {
+    "dropdowns": [
+      {
+        "dropdown": "Astro Hash",
+        "description": "Secure Astro websites",
+        "icon": "file-lock",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "astro-hash/introduction",
+              "astro-hash/installation",
+              "astro-hash/quickstart"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "theme": "maple"
+}

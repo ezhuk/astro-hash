@@ -1,0 +1,24 @@
+---
+title: Installation
+icon: terminal
+---
+
+Make sure to configure your `.npmrc` to enable installing scoped packages. See [Installing a package from GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package) for instructions and more details.
+
+```bash
+npm install --save-dev @ezhuk/astro-hash
+```
+
+In your `astro.config.*` file, import and register the integration:
+
+```javascript
+import { defineConfig } from 'astro/config';
+import { security } from '@ezhuk/astro-hash';
+
+export default defineConfig({
+  // ...
+  integrations: [
+    security()
+  ]
+});
+```
