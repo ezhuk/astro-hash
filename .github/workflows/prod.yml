@@ -7,24 +7,7 @@ on:
     types: [created]
 
 jobs:
-  build:
-    permissions:
-      contents: read
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.x
-          cache: 'npm'
-      - run: |
-          npm ci
-          npm run check
-          npm run build --if-present
-          npm test
-
   publish:
-    needs: build
     permissions:
       contents: read
       packages: write
@@ -34,11 +17,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 24.x
           registry-url: https://npm.pkg.github.com/
       - run: |
           npm ci
+          npm run check
           npm run build --if-present
+          npm run test
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
