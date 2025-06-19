@@ -28,7 +28,6 @@ export async function readOrFetchFile(
       if (!res.ok) return null;
       return Buffer.from(await res.arrayBuffer());
     }
-    // local file
     const relative = url.startsWith('/') ? url.slice(1) : url;
     return fs.readFile(path.join(distDir, relative));
   } catch {
