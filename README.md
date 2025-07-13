@@ -1,6 +1,7 @@
 ## Astro Hash 🚀 #️⃣
 
 [![test](https://github.com/ezhuk/astro-hash/actions/workflows/test.yml/badge.svg)](https://github.com/ezhuk/astro-hash/actions/workflows/test.yml)
+[![codecov](https://codecov.io/github/ezhuk/astro-hash/graph/badge.svg?token=IOWJ17XM82)](https://codecov.io/github/ezhuk/astro-hash)
 [![prod](https://github.com/ezhuk/astro-hash/actions/workflows/prod.yml/badge.svg)](https://github.com/ezhuk/astro-hash/actions/workflows/prod.yml)
 
 An [Astro Integration](https://docs.astro.build/en/guides/integrations-guide/) that automatically generates and injects [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) and [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP) hashes for CSS and JavaScript assets at build time, helping mitigate supply-chain and cross-site scripting risks.
