@@ -1,8 +1,11 @@
 import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
 
-import { addSecurityAttributes } from '../src/index.ts';
+import { addSecurityAttributes, security } from '../src/index.ts';
 
 describe('Hash', () => {
   const dir = '.';
@@ -81,5 +84,33 @@ describe('Hash', () => {
     expect(out).toContain(
       `<script src="external.js" integrity="sha384-${hash}"`,
     );
+  });
+});
+
+describe('Hook', () => {
+  let tmpDir: string;
+
+  beforeAll(async () => {
+    tmpDir = await fs.mkdtemp(join(tmpdir(), 'astro-hash-'));
+    await fs.writeFile(
+      join(tmpDir, 'index.html'),
+      '<!doctype html><html></html>',
+      'utf-8',
+    );
+  });
+
+  afterAll(async () => {
+    await fs.rm(tmpDir, { recursive: true, force: true });
+    vi.restoreAllMocks();
+  });
+
+  test('No Throw', async () => {
+    const hook = security().hooks['astro:build:done'];
+    await expect(
+      hook({
+        dir: pathToFileURL(tmpDir),
+        logger: { info: () => {}, warn: () => {}, error: () => {} },
+      }),
+    ).resolves.not.toThrow();
   });
 });
