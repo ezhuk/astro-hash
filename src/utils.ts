@@ -29,7 +29,7 @@ export async function readOrFetchFile(
       return Buffer.from(await res.arrayBuffer());
     }
     const relative = url.startsWith('/') ? url.slice(1) : url;
-    return fs.readFile(path.join(distDir, relative));
+    return await fs.readFile(path.join(distDir, relative));
   } catch {
     return null;
   }

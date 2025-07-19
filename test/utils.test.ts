@@ -86,4 +86,9 @@ describe('readOrFetchFile', () => {
     expect(buf).toBeInstanceOf(Buffer);
     expect(buf.toString()).toBe(remoteContent);
   });
+
+  test('error', async () => {
+    const buf = await readOrFetchFile('none', tmpDir);
+    expect(buf).toBeNull();
+  });
 });
