@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import type { AstroIntegration, Logger } from 'astro';
+import type { AstroIntegration } from 'astro';
 import { JSDOM } from 'jsdom';
 
 import { computeHash, getFiles, readOrFetchFile } from './utils.js';
