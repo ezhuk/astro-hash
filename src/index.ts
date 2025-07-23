@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import type { AstroIntegration } from 'astro';
+import type { AstroIntegration, AstroIntegrationLogger } from 'astro';
 import { JSDOM } from 'jsdom';
 
 import { computeHash, getFiles, readOrFetchFile } from './utils.js';
@@ -15,7 +15,7 @@ async function addSecurityAttributes(
   html: string,
   dir: string,
   out: boolean,
-  logger: Logger,
+  logger: AstroIntegrationLogger,
 ): Promise<string> {
   const dom = new JSDOM(html);
   const elems = Array.from(
