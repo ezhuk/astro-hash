@@ -1,15 +1,21 @@
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import type { AstroIntegration } from 'astro';
+import type { AstroIntegration, Logger } from 'astro';
 import { JSDOM } from 'jsdom';
 
 import { computeHash, getFiles, readOrFetchFile } from './utils.js';
 
 const PKG_NAME = '@ezhuk/astro-hash';
 
+export interface Options {
+  printHashes?: boolean;
+}
+
 async function addSecurityAttributes(
   html: string,
   dir: string,
+  out: boolean,
+  logger: Logger,
 ): Promise<string> {
   const dom = new JSDOM(html);
   const elems = Array.from(
@@ -29,13 +35,18 @@ async function addSecurityAttributes(
         if (url) {
           elem.setAttribute('crossorigin', 'anonymous');
         }
+        if (out) {
+          logger.info(`${url ?? 'inline'}: ${hash}`);
+        }
       }
     }),
   );
   return dom.serialize();
 }
 
-export function security(): AstroIntegration {
+export function security(options: Options = {}): AstroIntegration {
+  const { printHashes = true } = options;
+
   return {
     name: PKG_NAME,
 
@@ -46,7 +57,7 @@ export function security(): AstroIntegration {
         await Promise.all(
           files.map(async (file) => {
             let html = await fs.readFile(file, 'utf-8');
-            html = await addSecurityAttributes(html, dist);
+            html = await addSecurityAttributes(html, dist, printHashes, logger);
             await fs.writeFile(file, html, 'utf-8');
           }),
         );
