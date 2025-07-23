@@ -3,7 +3,15 @@ import fs from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { afterAll, beforeAll, describe, expect, test, vi } from 'vitest';
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  test,
+  vi,
+} from 'vitest';
 
 import { addSecurityAttributes, security } from '../src/index.ts';
 
@@ -34,6 +42,8 @@ describe('Hash', () => {
   </body>
 </html>`;
 
+  let logger: { info: ReturnType<typeof vi.fn> };
+
   beforeAll(() => {
     vi.spyOn(fs, 'readFile').mockImplementation(
       async (path: string | Buffer) => {
@@ -48,22 +58,36 @@ describe('Hash', () => {
     );
   });
 
+  beforeEach(() => {
+    logger = { info: vi.fn() };
+  });
+
   afterAll(() => {
     vi.restoreAllMocks();
   });
 
   test('Inline Style', async () => {
     const hash = createHash('sha256').update(inlineCSS.trim()).digest('base64');
-    const out = await addSecurityAttributes(html, dir);
+    const out = await addSecurityAttributes(html, dir, true, logger);
     expect(out).toContain(`<style integrity="sha256-${hash}"`);
+
+    const messages = logger.info.mock.calls.map((call) => call[0] as string);
+    expect(messages).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(`inline: sha256-${hash}`),
+      ]),
+    );
   });
 
   test('Inline Script', async () => {
     const hash = createHash('sha256')
       .update(inlineScript.trim())
       .digest('base64');
-    const out = await addSecurityAttributes(html, dir);
+    const out = await addSecurityAttributes(html, dir, false, logger);
     expect(out).toContain(`<script integrity="sha256-${hash}"`);
+
+    const messages = logger.info.mock.calls.map((call) => call[0] as string);
+    expect(messages.some((msg) => msg.includes(`sha256-${hash}`))).toBe(false);
   });
 
   test('External Style', async () => {
