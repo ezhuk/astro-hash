@@ -14,8 +14,9 @@
   "keywords": ["astro", "integration", "security"],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "vitest run --coverage",
-    "check": "biome check . --apply"
+    "check": "biome check .",
+    "format": "biome format --write",
+    "test": "vitest run --coverage"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
