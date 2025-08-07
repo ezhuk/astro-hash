@@ -21,7 +21,6 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: |
           npm ci
-          npm run format
           npm run check
           npm run build --if-present
           npm run test
