@@ -14,8 +14,7 @@
   "keywords": ["astro", "integration", "security"],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "check": "biome check .",
-    "format": "biome format --write",
+    "check": "biome check --write",
     "test": "vitest run --coverage"
   },
   "publishConfig": {
