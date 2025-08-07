@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "vitest run --coverage",
-    "check": "biome check ."
+    "check": "biome check . --apply"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
