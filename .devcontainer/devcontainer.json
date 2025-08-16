@@ -1,4 +1,10 @@
 {
   "image": "mcr.microsoft.com/devcontainers/typescript-node",
-  "extensions": ["astro-build.astro-vscode"]
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "astro-build.astro-vscode"
+      ]
+    }
+  }
 }
