@@ -1,5 +1,7 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/typescript-node",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "customizations": {
     "vscode": {
       "extensions": [
