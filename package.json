@@ -29,8 +29,8 @@
   "devDependencies": {
     "@biomejs/biome": "2.3.8",
     "@types/jsdom": "^27.0.0",
-    "@vitest/coverage-v8": "^4.0.14",
-    "astro": "^5.16.3",
+    "@vitest/coverage-v8": "^4.0.15",
+    "astro": "^5.16.4",
     "typescript": "^5.9.3",
     "vitest": "^4.0.4"
   },
@@ -38,6 +38,6 @@
     "astro": "^4.0.0 || ^5.0.0"
   },
   "dependencies": {
-    "jsdom": "^27.2.0"
+    "jsdom": "^27.3.0"
   }
 }
