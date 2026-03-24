@@ -27,11 +27,11 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.7",
+    "@biomejs/biome": "2.4.8",
     "@types/jsdom": "^28.0.1",
-    "@vitest/coverage-v8": "^4.1.0",
+    "@vitest/coverage-v8": "^4.1.1",
     "astro": "^6.0.8",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "vitest": "^4.0.4"
   },
   "peerDependencies": {
