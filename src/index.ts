@@ -31,8 +31,8 @@ async function addSecurityAttributes(
         : (elem.textContent ?? '').trim();
       if (data) {
         const hash = computeHash(data, url ? 'sha384' : 'sha256');
-        elem.setAttribute('integrity', `${hash}`);
         if (url) {
+          elem.setAttribute('integrity', `${hash}`);
           elem.setAttribute('crossorigin', 'anonymous');
         }
         if (out) {
@@ -66,5 +66,5 @@ export function security(options: Options = {}): AstroIntegration {
   };
 }
 
-export { addSecurityAttributes };
 export * from './utils.js';
+export { addSecurityAttributes };
