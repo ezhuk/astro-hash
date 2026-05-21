@@ -66,5 +66,5 @@ export function security(options: Options = {}): AstroIntegration {
   };
 }
 
-export { addSecurityAttributes };
 export * from './utils.js';
+export { addSecurityAttributes };

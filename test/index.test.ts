@@ -69,7 +69,8 @@ describe('Hash', () => {
   test('Inline Style', async () => {
     const hash = createHash('sha256').update(inlineCSS.trim()).digest('base64');
     const out = await addSecurityAttributes(html, dir, true, logger);
-    expect(out).toContain(`<style integrity="sha256-${hash}"`);
+    expect(out).not.toContain(`<style integrity="sha256-${hash}"`);
+    expect(out).toContain(inlineCSS);
 
     const messages = logger.info.mock.calls.map((call) => call[0] as string);
     expect(messages).toEqual(
@@ -84,7 +85,8 @@ describe('Hash', () => {
       .update(inlineScript.trim())
       .digest('base64');
     const out = await addSecurityAttributes(html, dir, false, logger);
-    expect(out).toContain(`<script integrity="sha256-${hash}"`);
+    expect(out).not.toContain(`<script integrity="sha256-${hash}"`);
+    expect(out).toContain(inlineScript);
 
     const messages = logger.info.mock.calls.map((call) => call[0] as string);
     expect(messages.some((msg) => msg.includes(`sha256-${hash}`))).toBe(false);

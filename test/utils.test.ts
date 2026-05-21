@@ -62,7 +62,7 @@ describe('readOrFetchFile', () => {
     tmpFile = path.join(tmpDir, 'index.html');
     await fs.writeFile(tmpFile, localContent, 'utf-8');
 
-    vi.stubGlobal('fetch', async (input: RequestInfo) => {
+    vi.stubGlobal('fetch', async () => {
       return {
         ok: true,
         arrayBuffer: async () => new TextEncoder().encode(remoteContent),
