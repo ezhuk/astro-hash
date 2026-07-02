@@ -1,6 +1,6 @@
 {
   "name": "@ezhuk/astro-hash",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Astro integration for automatic asset SRI and CSP hashing",
   "type": "module",
   "main": "dist/index.js",
@@ -30,12 +30,12 @@
     "@biomejs/biome": "2.5.2",
     "@types/jsdom": "^28.0.3",
     "@vitest/coverage-v8": "^4.1.9",
-    "astro": "^7.0.4",
+    "astro": "^7.0.5",
     "typescript": "^6.0.3",
     "vitest": "^4.0.4"
   },
   "peerDependencies": {
-    "astro": "^6.0.5"
+    "astro": "^7.0.5"
   },
   "dependencies": {
     "jsdom": "^29.1.1"
