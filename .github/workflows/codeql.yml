@@ -9,7 +9,7 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: '38 3 * * 4'
+    - cron: "38 3 * * 4"
 
 jobs:
   analyze:
@@ -25,17 +25,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - language: actions
-          build-mode: none
-        - language: javascript-typescript
-          build-mode: none
+          - language: actions
+            build-mode: none
+          - language: javascript-typescript
+            build-mode: none
 
     steps:
-    - uses: actions/checkout@v7
-    - uses: github/codeql-action/init@v4
-      with:
-        languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
-    - uses: github/codeql-action/analyze@v4
-      with:
-        category: "/language:${{matrix.language}}"
+      - uses: actions/checkout@v7
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+      - uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{matrix.language}}"
