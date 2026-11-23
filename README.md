@@ -6,7 +6,7 @@
 
 An [Astro Integration](https://docs.astro.build/en/guides/integrations-guide/) that automatically generates and injects [Subresource Integrity (SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) and [Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP) hashes for CSS and JavaScript assets at build time, helping mitigate supply-chain and cross-site scripting risks.
 
-##  Getting Started
+## Getting Started
 
 Make sure to configure your `.npmrc` to enable installing scoped packages. See [Installing a package from GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package) for instructions and more details.
 
@@ -22,9 +22,7 @@ import { security } from '@ezhuk/astro-hash';
 
 export default defineConfig({
   // ...
-  integrations: [
-    security()
-  ]
+  integrations: [security()],
 });
 ```
 
@@ -43,4 +41,3 @@ See the [full documentation](https://docs.ezhuk.dev/astro-hash) for more details
 ## License
 
 The integration is licensed under the [MIT License](https://github.com/ezhuk/astro-hash?tab=MIT-1-ov-file).
-
